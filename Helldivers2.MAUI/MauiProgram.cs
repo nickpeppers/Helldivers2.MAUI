@@ -1,4 +1,6 @@
-﻿using Helldivers2.MAUI.Helpers;
+﻿using CommunityToolkit.Maui;
+using Helldivers2.MAUI.Helpers;
+using Helldivers2.MAUI.Services;
 using MemoryToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -11,11 +13,13 @@ namespace Helldivers2.MAUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .Services.AddSingleton<IHelldiversApiService, HelldiversApiService>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

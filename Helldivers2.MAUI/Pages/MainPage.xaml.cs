@@ -1,6 +1,6 @@
 ﻿namespace Helldivers2.MAUI.Pages
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : BasePage
     {
         int count = 0;
 
@@ -21,5 +21,4 @@
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
     }
-
 }
