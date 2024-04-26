@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Helldivers2.MAUI.ViewModels"
+             xmlns:pages="clr-namespace:Helldivers2.MAUI.Pages"
+             xmlns:models="clr-namespace:Helldivers2.MAUI.Models"
+             x:Class="Helldivers2.MAUI.Pages.CampaignPage"
+             Title="Campaign">
+    <pages:BasePage.BindingContext>
+        <vm:CampaignViewModel />
+    </pages:BasePage.BindingContext>
+    <Grid>
+        <BoxView VerticalOptions="Start" HeightRequest="1"/>
+        <RefreshView IsRefreshing="{Binding Refreshing}" Command="{Binding RefreshCommand}">
+            <CollectionView Margin="0,1,0,0" ItemsSource="{Binding Campaigns}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Campaign">
+                        <StackLayout>
+                            <Label Margin="8,8" Text="{Binding Name}" FontSize="Medium"/>
+                            <Label Margin="8,8" Text="{Binding Faction}" FontSize="Medium"/>
+                            <Label Margin="8,8"  FontSize="Medium">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Active Players: "/>
+                                        <Span Text="{Binding Players}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Margin="8,8"  FontSize="Medium">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Percentage Liberated: "/>
+                                        <Span Text="{Binding Percentage}"/>
+                                        <Span Text="%"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Margin="8,8" Text="Defense" IsVisible="{Binding Defense}" FontSize="Medium"/>
+                            <Label Margin="8,8" Text="Major Order" IsVisible="{Binding MajorOrder}" FontSize="Medium"/>
+                            <Label Margin="8,8" FontSize="Medium">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Biome: "/>
+                                        <Span Text="{Binding Biome.Slug}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Margin="8,8" FontSize="Medium">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Description: "/>
+                                        <Span Text="{Binding Biome.Description}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <BoxView VerticalOptions="End" HeightRequest="1"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <ActivityIndicator IsRunning="{Binding Loading}" HorizontalOptions="Center" VerticalOptions="Center"/>
+    </Grid>
+</pages:BasePage>
