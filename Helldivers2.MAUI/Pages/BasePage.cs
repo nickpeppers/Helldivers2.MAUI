@@ -22,7 +22,7 @@ namespace Helldivers2.MAUI.Pages
 
             try
             {
-                if(_viewModel != null)
+                if (_viewModel != null)
                 {
                     await _viewModel.Initialize();
                 }
@@ -39,9 +39,9 @@ namespace Helldivers2.MAUI.Pages
 
             try
             {
-                if(_viewModel != null)
+                if (_viewModel != null)
                 {
-                    await _viewModel.Initialize();
+                    await _viewModel.Uninitialize();
                 }
             }
             catch (Exception exc)

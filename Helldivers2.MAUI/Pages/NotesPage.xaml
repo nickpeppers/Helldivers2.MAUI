@@ -3,15 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Helldivers2.MAUI.ViewModels"
              xmlns:pages="clr-namespace:Helldivers2.MAUI.Pages"
+             xmlns:models="clr-namespace:Helldivers2.MAUI.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Helldivers2.MAUI.Pages.NotesPage"
              Title="Notes">
     <pages:BasePage.BindingContext>
-        <vm:NotesViewModel />
+        <vm:NotesViewModel x:Name="_viewModel"/>
     </pages:BasePage.BindingContext>
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <pages:BasePage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="_isStringNullOrEmptyConverter"/>
+        </ResourceDictionary>
+    </pages:BasePage.Resources>
+    <Grid>
+        <BoxView VerticalOptions="Start" HeightRequest="1"/>
+        <CollectionView Margin="0,1,0,0" ItemsSource="{Binding Notes}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Note">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItem Text="Delete" BackgroundColor="Red" Command="{Binding Source={x:Reference _viewModel}, Path=RemoveNoteCommand}" CommandParameter="{Binding .}"/>
+                        </SwipeView.RightItems>
+                        <VerticalStackLayout>
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference _viewModel}, Path=ModifyNoteCommand}" CommandParameter="{Binding .}"/>
+                            </VerticalStackLayout.GestureRecognizers>
+                            <Label Margin="8,8" Text="{Binding Title}" MaxLines="1" FontSize="Large" LineBreakMode="TailTruncation"/>
+                            <Label Margin="8,8" Text="{Binding Description}" IsVisible="{Binding Description, Converter={StaticResource _isStringNullOrEmptyConverter}}" 
+                                   MaxLines="2" FontSize="Medium" LineBreakMode="TailTruncation"/>
+                            <BoxView VerticalOptions="End" HeightRequest="1"/>
+                        </VerticalStackLayout>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Command="{Binding AddNoteCommand}" HorizontalOptions="End" VerticalOptions="End" Text="+" FontSize="Large" 
+                CornerRadius="22" WidthRequest="44" HeightRequest="44" Margin="0,0,16,16"/>
+    </Grid>
 </pages:BasePage>

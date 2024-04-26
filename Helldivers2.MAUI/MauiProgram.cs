@@ -19,11 +19,14 @@ namespace Helldivers2.MAUI
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 })
-                .Services.AddSingleton<IHelldiversApiService, HelldiversApiService>();
+                .Services.AddSingleton<INavigationService, NavigationService>()
+                .AddSingleton<IHelldiversApiService, HelldiversApiService>()
+                .AddSingleton<ICacheService, CacheService>();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 
+            //MemoryToolkit to detect memory leaks in the app
             builder.UseLeakDetection(collectionTarget =>
             {
                 // This callback will run any time a leak is detected.

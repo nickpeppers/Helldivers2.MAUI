@@ -8,9 +8,11 @@ namespace Helldivers2.MAUI.ViewModels
     {
         private readonly IHelldiversApiService _helldiversApiService = ServiceHelper.GetService<IHelldiversApiService>();
 
-        public override async Task Initialize()
+        public override Task Initialize()
         {
-            var campaignInfo = await _helldiversApiService.GetWarCampaign();
+            //TODO: Add try catch and cache/load data
+            //var campaignInfo = await _helldiversApiService.GetWarCampaign();
+            return base.Initialize();
         }
     }
 }
